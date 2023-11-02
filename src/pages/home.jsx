@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy, Suspense, useState } from 'react'
 
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai'
@@ -34,7 +34,11 @@ import AMA from '../img/ama.png'
 import dict from '../img/dict.png'
 import tup from '../img/tup.png'
 
+const TwitterClone = lazy(() => import('./twitter-clone/twitter-clone'))
+
 const Home = () => {
+	const [showTwitterClone, setShowTwitterClone] = useState(false)
+
 	return (
 		<div className="max-width">
 			<div className="main-bg">
@@ -46,8 +50,8 @@ const Home = () => {
 							<p>Good day, I am Ernst Legaspi. I have 3 years personal experience and 1 year of work experience in web development using different full stack technologies, I am eager to contribute my skills to your dynamic team and assist in developing cutting-edge applications.</p>
 							<div className="socials">
 								<a href="https://www.linkedin.com/in/er
-								nst-danielle-legaspi-259547170/" target="_blank"><AiFillGithub size={20} /></a>
-								<a href="https://github.com/ernstlegaspi" target="_blank"><AiFillLinkedin size={20} /></a>
+								nst-danielle-legaspi-259547170/" target="_blank" rel="noreferrer"><AiFillGithub size={20} /></a>
+								<a href="https://github.com/ernstlegaspi" target="_blank" rel="noreferrer"><AiFillLinkedin size={20} /></a>
 								<a href="mailto:legapsiernstdanielle@gmail.com"><HiMail size={24} /></a>
 							</div>
 						</div>
@@ -58,7 +62,7 @@ const Home = () => {
 					<div className="projects">
 						<h2>Recent Projects</h2>
 						<div className="p-row">
-							<div className="project">
+							<div onClick={() => setShowTwitterClone(true)} className="project">
 								<LazyLoadImage effect="blur" className="project-image" alt="Twitter Clone Project" src={twitterProject} />
 								<div className="overlay">
 									<p>View project</p>
@@ -185,6 +189,9 @@ const Home = () => {
 						</div>
 					</div>
 				</div>
+				<Suspense fallback={<p>Loading...</p>}>
+					{showTwitterClone ? <TwitterClone showTwitterClone={setShowTwitterClone} /> : null}
+				</Suspense>
 			</div>
 		</div>
 	)
